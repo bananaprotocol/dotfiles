@@ -1,0 +1,4 @@
+$include /etc/inputrc
+
+# Fix keypad problem for readline applications
+set enable-keypad on
