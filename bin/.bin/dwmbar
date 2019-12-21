@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+
+print_date() {
+  date '+%a %Y-%m-%d %T'
+}
+
+print_alsa() {
+  volume=$(amixer get Master | awk -F'[][]' 'END{ print $2 }')
+  status=$(amixer get Master | awk -F'[][]' 'END{ print $4 }')
+
+  if [ "$status" = "on" ]; then
+    printf "VOL: %s" "$volume"
+  else
+    printf "VOL: MUTE"
+  fi
+}
+
+print_pulse() {
+  volume=$(amixer -D pulse get Master | awk -F'[][]' 'END{ print $2 }')
+  status=$(amixer -D pulse get Master | awk -F'[][]' 'END{ print $4 }')
+
+  if [ "$status" = "on" ]; then
+    printf "VOL: %s" "$volume"
+  else
+    printf "VOL: MUTE"
+  fi
+}
+
+print_battery() {
+  capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+  status=$(cat /sys/class/power_supply/BAT0/status)
+
+  if [ "$status" = "Discharging" ]; then
+    printf "BAT: %s%%" "$capacity"
+  else
+    printf "BAT: %s%%+" "$capacity"
+  fi
+}
+
+print_mem() {
+  mem_free=$(free -h | awk '(NR==2){ print $3 }')
+  mem_total=$(free -h | awk '(NR==2){ print $2 }')
+
+  printf "MEM: %s/%s" "$mem_free" "$mem_total"
+}
+
+main() {
+  while :; do
+    xsetroot -name "$(print_mem) | $(print_pulse) | $(print_date)"
+
+    sleep 1
+  done
+}
+
+main
