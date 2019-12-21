@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+# Automatically starts applications when logging into a graphical session via xinit or a DM.
+
+xrdb -merge ~/.Xresources
+xset s off -dpms
+setxkbmap de
+wal -R
+
+eval $(ssh-agent)
+
+dwmbar &
+dunst &
+picom -b --config /dev/null &
+mpd &
+redshift &
