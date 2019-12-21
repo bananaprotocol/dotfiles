@@ -1,3 +1,5 @@
+" bananaprotocol's neovim config
+
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 
