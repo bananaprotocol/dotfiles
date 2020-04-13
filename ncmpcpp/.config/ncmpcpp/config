@@ -1,7 +1,8 @@
 # bananaprotocol's ncmpcpp config
 
-# Change default directory from ~/.ncmpcpp to ~/.config/ncmpcpp
+# Change default directories to support the XDG Base Directory specification 
 ncmpcpp_directory = ~/.config/ncmpcpp
+lyrics_directory = ~/.config/ncmpcpp/lyrics
 
 # mpd settings
 mpd_host = localhost
